@@ -5,12 +5,20 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Provider } from 'react-redux';
 
 import { NativeRouter, Route, Link } from 'react-router-native';
 
 import { createStore, applyMiddleware } from 'redux';
 
-import { AsyncStorage } from 'react-native';
+import reducers from './app/reducers';
+
+import configureStore from './app/store/configureStore';
+
+import AllNotes from './app/components/allNotes';
+
+// const store = configureStore(() => this.setState({isLoading: false}));
+const store = configureStore();
 
 const Home = () => (
   <Text style={styles.header}>
@@ -67,37 +75,39 @@ const Topics = ({ match }) => (
 );
 
 const Notes = () => (
-  <NativeRouter>
-    <View style={styles.container}>
-      <View style={styles.nav}>
-        <Link
-          to="/"
-          underlayColor="#f0f4f7"
-          style={styles.navItem}
-        >
-          <Text>Home</Text>
-        </Link>
-        <Link
-          to="/about"
-          underlayColor="#f0f4f7"
-          style={styles.navItem}
-        >
-          <Text>About</Text>
-        </Link>
-        <Link
-          to="/topics"
-          underlayColor="#f0f4f7"
-          style={styles.navItem}
-        >
-          <Text>Topics</Text>
-        </Link>
-      </View>
+  <Provider store={store}>
+    <NativeRouter>
+      <View style={styles.container}>
+        <View style={styles.nav}>
+          <Link
+            to="/"
+            underlayColor="#f0f4f7"
+            style={styles.navItem}
+          >
+            <Text>Home</Text>
+          </Link>
+          <Link
+            to="/about"
+            underlayColor="#f0f4f7"
+            style={styles.navItem}
+          >
+            <Text>About</Text>
+          </Link>
+          <Link
+            to="/topics"
+            underlayColor="#f0f4f7"
+            style={styles.navItem}
+          >
+            <Text>Topics</Text>
+          </Link>
+        </View>
 
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
-    </View>
-  </NativeRouter>
+        <Route exact path="/" component={AllNotes} />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+      </View>
+    </NativeRouter>
+  </Provider>
 );
 
 const styles = StyleSheet.create({
