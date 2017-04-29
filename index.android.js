@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import { Provider } from 'react-redux';
 
-import { NativeRouter, Route, Link } from 'react-router-native';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+
+// import {  Redirect } from 'react-router';
+
+import {
+  nativeHistory,
+  NativeRouter,
+  Route,
+  Link,
+  AndroidBackButton,
+  withRouter,
+  Router,
+} from 'react-router-native';
 
 import { createStore, applyMiddleware } from 'redux';
 
@@ -17,6 +30,7 @@ import reducers from './app/reducers';
 import configureStore from './app/store/configureStore';
 
 // import AllNotes from './app/components/allNotes';
+import newNote from './app/components/newNote';
 
 import Toolbar from './app/lib/Toolbar';
 import AddNoteButton from './app/lib/AddNoteButton';
@@ -26,7 +40,7 @@ import { default as VectorIcon } from 'react-native-vector-icons/MaterialIcons';
 // const store = configureStore(() => this.setState({isLoading: false}));
 const store = configureStore();
 
-const AllNotes = () => {
+const AllNotes = withRouter((props) => {
   function addNewNote() {
     this.props.navigator.push({ component: NewNote, type: 'addingNote' });
   }
@@ -86,21 +100,25 @@ const AllNotes = () => {
         animated
       />
       <Toolbar title="Asprov Notes" color={getColor('paperBlue')} />
-
-      <Link
-        to="/topics"
+      <View
         style={AllNotesStyles.container}
       >
-        <VectorIcon
-          name={'add-circle'}
-          size={56}
-          color={getColor('paperBlue')}
-          allowFontScaling
-        />
-      </Link>
+        <TouchableOpacity
+          onPress={() => {
+            props.router.push('/topics');
+          }}
+        >
+          <VectorIcon
+            name={'add-circle'}
+            size={56}
+            color={getColor('paperBlue')}
+            allowFontScaling
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
+});
 
 const About = () => (
   <Text style={styles.header}>
@@ -152,21 +170,23 @@ const Topics = ({ match }) => (
 
 const Notes = () => (
   <Provider store={store}>
-    <NativeRouter>
-      <View style={styles.container}>
-        <Route exact path="/" component={AllNotes} />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
-      </View>
-    </NativeRouter>
+    <Router history={nativeHistory}>
+      <AndroidBackButton>
+        <View>
+          <Route exact path="/" component={AllNotes} />
+          <Route path="/about" component={About} />
+          <Route path="/topics" component={Topics} />
+        </View>
+      </AndroidBackButton>
+    </Router>
   </Provider>
 );
 
 const AllNotesStyles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 15,
-    right: 15,
+    bottom: -600,
+    left: 340,
     backgroundColor: 'white',
     borderRadius: 50,
   },

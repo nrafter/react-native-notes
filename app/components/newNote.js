@@ -104,4 +104,4 @@ class NewNote extends Component {
   }
 }
 
-export default connect(null, { addNote })(NewNote);
+export default NewNote;
