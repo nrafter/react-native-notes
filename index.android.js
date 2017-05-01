@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,41 +6,32 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import { Provider } from 'react-redux';
 
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-
-// import {  Redirect } from 'react-router';
-
-import {
-  nativeHistory,
-  NativeRouter,
+import { NativeRouter,
   Route,
   Link,
-  AndroidBackButton,
   withRouter,
-  Router,
+  Redirect,
 } from 'react-router-native';
-
-import { createStore, applyMiddleware } from 'redux';
-
-import reducers from './app/reducers';
 
 import configureStore from './app/store/configureStore';
 
-// import AllNotes from './app/components/allNotes';
-import newNote from './app/components/newNote';
+console.log(Animated);
 
 import Toolbar from './app/lib/Toolbar';
 import AddNoteButton from './app/lib/AddNoteButton';
 import { getColor } from './app/lib/helpers';
 import { default as VectorIcon } from 'react-native-vector-icons/MaterialIcons';
 
-// const store = configureStore(() => this.setState({isLoading: false}));
 const store = configureStore();
 
-const AllNotes = withRouter((props) => {
+const AllNotes = withRouter(({history, location, match}) => {
+  // console.log(NativeRouter);
+  // console.log(withRouter);
+  // debugger;
   function addNewNote() {
     this.props.navigator.push({ component: NewNote, type: 'addingNote' });
   }
@@ -100,31 +91,48 @@ const AllNotes = withRouter((props) => {
         animated
       />
       <Toolbar title="Asprov Notes" color={getColor('paperBlue')} />
-      <View
-        style={AllNotesStyles.container}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            props.router.push('/topics');
-          }}
-        >
+
+      {/*<Link*/}
+        {/*style={AllNotesStyles.container}*/}
+        {/*to="/topics"*/}
+      {/*>*/}
+        <TouchableOpacity style={AllNotesStyles.container} onPress={() => { console.log(history); history.push('/about'); } }>
           <VectorIcon
+            // style={AllNotesStyles.container}
             name={'add-circle'}
             size={56}
             color={getColor('paperBlue')}
             allowFontScaling
           />
         </TouchableOpacity>
-      </View>
+      {/*</Link>*/}
     </View>
   );
 });
 
-const About = () => (
-  <Text style={styles.header}>
-    About
-  </Text>
-);
+const About = () => {
+  let fadeAnim = new Animated.Value(0);
+
+  Animated.timing(                            // Animate over time
+    fadeAnim,                      // The animated value to drive
+    {
+      toValue: 1,                             // Animate to opacity: 1, or fully opaque
+      duration: 4000,
+    },
+  ).start();
+
+  return (
+    <Animated.View
+      style={{
+        opacity: fadeAnim,
+      }}
+    >
+      <Text>
+        About
+      </Text>
+    </Animated.View>
+  );
+}
 
 const Topic = ({ match }) => (
   <Text style={styles.topic}>
@@ -170,15 +178,13 @@ const Topics = ({ match }) => (
 
 const Notes = () => (
   <Provider store={store}>
-    <Router history={nativeHistory}>
-      <AndroidBackButton>
-        <View>
-          <Route exact path="/" component={AllNotes} />
-          <Route path="/about" component={About} />
-          <Route path="/topics" component={Topics} />
-        </View>
-      </AndroidBackButton>
-    </Router>
+    <NativeRouter>
+      <View style={styles.container}>
+        <Route exact path="/" component={AllNotes} />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+      </View>
+    </NativeRouter>
   </Provider>
 );
 
@@ -186,7 +192,7 @@ const AllNotesStyles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: -600,
-    left: 340,
+    right: 15,
     backgroundColor: 'white',
     borderRadius: 50,
   },
