@@ -1,10 +1,6 @@
-//
-// Add New Note Button
-//
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
@@ -15,21 +11,19 @@ import { Typo } from './Typography';
 import { getColor } from './helpers';
 import Icon from './Icon';
 
-const AddNoteButton = ({ addNote }) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={addNote}>
-        <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
-      </TouchableOpacity>
-    </View>
-  )
-}
+const AddNoteButton = ({ addNote }) => (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={addNote}>
+      <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
+    </TouchableOpacity>
+  </View>
+);
 
 const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addNote: () => dispatch(NavigationActions.navigate({ routeName: 'Profile' })),
+  addNote: () => dispatch(NavigationActions.navigate({ routeName: 'NewNote' })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNoteButton);

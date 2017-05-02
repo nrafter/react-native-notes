@@ -5,7 +5,7 @@ import currentNote from './current';
 
 import { AppNavigator } from '../navigators/AppNavigator';
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Main'));
+const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('AllNotes'));
 
 function nav(state = initialState, action) {
   let nextState;
