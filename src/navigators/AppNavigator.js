@@ -7,6 +7,7 @@ import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 import NewNote from '../components/newNote';
 import AllNotes from '../components/allNotes';
+import SingleNote from '../components/singleNote';
 
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
@@ -14,6 +15,7 @@ export const AppNavigator = StackNavigator({
   Profile: { screen: ProfileScreen },
   NewNote: { screen: NewNote },
   AllNotes: { screen: AllNotes },
+  SingleNote: { screen: SingleNote },
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

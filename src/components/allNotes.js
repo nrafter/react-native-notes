@@ -21,11 +21,11 @@ import { Typo } from '../lib/Typography';
 
 const AllNotes = (props) => {
   function addNewNote() {
-    props.navigator.push({ component: NewNote, type: 'addingNote' });
+    props.navigator.push('NewNote');
   }
 
   function goToNote(noteId, title, description) {
-    props.navigator.push({ component: SingleNote, type: 'editingNote', passProps: { noteId, title, description } });
+    props.navigator.push('SingleNote', { noteId, title, description });
   }
 
   function deleteNote(noteId) {
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   navigator: {
-    push: () => { dispatch(NavigationActions.navigate({ routeName: 'NewNote' })); },
+    push: (routeName, params) => { dispatch(NavigationActions.navigate({ routeName, params })); },
   },
   deleteNote: note => dispatch(deleteNote(note)),
 });
