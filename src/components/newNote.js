@@ -1,111 +1,93 @@
-import React, { Component } from 'react'
+import React from 'react';
 import {
-  Text,
   View,
   TextInput,
-  BackAndroid,
-  StatusBar
-} from 'react-native'
-import { connect } from 'react-redux'
+  StatusBar,
+} from 'react-native';
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
-import Toolbar from '../lib/Toolbar'
-import TickBtn from '../lib/TickBtn'
-import BackBtn from '../lib/BackBtn'
-import { styles } from './styles'
-import { getColor } from '../lib/helpers'
-import { Typo } from '../lib/Typography'
-import { addNote } from '../actions'
+import Toolbar from '../lib/Toolbar';
+import TickBtn from '../lib/TickBtn';
+import BackBtn from '../lib/BackBtn';
+import { styles } from './styles';
+import { getColor } from '../lib/helpers';
+import { Typo } from '../lib/Typography';
+import { addNote } from '../actions';
 
-class NewNote extends Component {
-  constructor(props) {
-    super(props);
+const NewNote = (props) => {
+  const state = {
+    title: '',
+    desc: '',
+  };
 
-    this._handleBackButton = this._handleBackButton.bind(this)
-
-    this.state = {
-      title: '',
-      desc: ''
-    }
+  function goBack(event) {
+    props.navigator.pop();
   }
 
-  componentDidMount() {
-    BackAndroid.addEventListener('backPressed', this._handleBackButton)
+  function addNote() {
+    // debugger;
+    props.addNote({
+      title: state.title,
+      description: state.desc,
+    });
+    goBack();
   }
 
-  componentWillUnmount() {
-    BackAndroid.removeEventListener('backPressed', this._handleBackButton)
-  }
+  return (
+    <View style={styles.addNotesContainer}>
+      <StatusBar
+        backgroundColor={getColor('paperTeal700')}
+        barStyle="light-content"
+        animated
+      />
 
-  _handleBackButton() {
-    if (this.state.title == '') {
-      this.goBack()
-    } else {
-      this.addNote()
-    }
-    this.goBack()
-    return true
-  }
-
-  render() {
-    return (
-      <View style={ styles.addNotesContainer }>
-        <StatusBar
-          backgroundColor={getColor('paperTeal700')}
-          barStyle="light-content"
-          animated={true}
+      <View style={styles.textInputContainer}>
+        <TextInput
+          style={styles.inputTitleStyle}
+          autoFocus
+          placeholder="Note Title..."
+          placeholderTextColor="#aaa"
+          returnKeyType="next"
+          underlineColorAndroid="transparent"
+          selectionColor={getColor('paperTeal')}
+          onChangeText={text => state.title = text}
         />
-        <Toolbar title="Add New Note" color={getColor('paperTeal')}/>
 
-        <View style={styles.textInputContainer}>
-          <TextInput
-            style={styles.inputTitleStyle}
-            autoFocus={true}
-            placeholder='Note Title...'
-            placeholderTextColor='#aaa'
-            returnKeyType='next'
-            underlineColorAndroid="transparent"
-            selectionColor={getColor('paperTeal')}
-            onChangeText={(text) => this.setState({ title: text })}
-            value={this.state.title}
-          />
-
-          <TextInput
-            style={styles.inputDescriptionStyle}
-            multiline={true}
-            placeholder='Note Description...'
-            placeholderTextColor='#aaa'
-            returnKeyType='done'
-            underlineColorAndroid="transparent"
-            selectionColor={getColor('paperTeal')}
-            onChangeText={(text) => this.setState({desc: text})}
-            value={this.state.desc}
-          />
-        </View>
-
-        <View style={styles.inputScreenBtnContainer}>
-          <TickBtn onBtnPress={this.addNote.bind(this)} />
-          <BackBtn onBtnPress={this.goBack.bind(this)} />
-        </View>
-
+        <TextInput
+          style={styles.inputDescriptionStyle}
+          multiline
+          placeholder="Note Description..."
+          placeholderTextColor="#aaa"
+          returnKeyType="done"
+          underlineColorAndroid="transparent"
+          selectionColor={getColor('paperTeal')}
+          onChangeText={text => state.desc = text}
+        />
       </View>
-    )
-  }
 
-  goBack(event) {
-    this.props.navigator.pop()
-  }
+      <View style={styles.inputScreenBtnContainer}>
+        <TickBtn onBtnPress={addNote} />
+        <BackBtn onBtnPress={goBack} />
+      </View>
 
-  addNote() {
-    this.props.addNote({
-      title: this.state.title,
-      description: this.state.desc
-    })
-    this.goBack()
-  }
-}
+    </View>
+  );
+};
 
 NewNote.navigationOptions = {
-  title: 'Add New Note',
-}
+  header: <Toolbar title="Add New Note" color={getColor('paperTeal')}/>,
+};
 
-export default connect(null, { addNote })(NewNote)
+const mapStateToProps = state => ({
+});
+
+const mapDispatchToProps = dispatch => ({
+  navigator: {
+    push: () => { dispatch(NavigationActions.navigate({ routeName: 'NewNote' })); },
+    pop: () => { dispatch(NavigationActions.back()); },
+  },
+  addNote: note => dispatch(addNote(note)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewNote);
