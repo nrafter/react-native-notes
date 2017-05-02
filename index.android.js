@@ -6,19 +6,13 @@ import { createStore } from 'redux';
 import AppReducer from './src/reducers';
 import AppWithNavigationState from './src/navigators/AppNavigator';
 
+const store = createStore(AppReducer);
 
-
-class Notes extends React.Component {
-  store = createStore(AppReducer);
-
-  render() {
-    return (
-      <Provider store={this.store}>
-        <AppWithNavigationState />
-      </Provider>
-    );
-  }
-}
+const Notes = () => (
+  <Provider store={store}>
+    <AppWithNavigationState />
+  </Provider>
+);
 
 AppRegistry.registerComponent('Notes', () => Notes);
 
