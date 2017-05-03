@@ -6,7 +6,7 @@ import AppWithNavigationState from './src/navigators/AppNavigator';
 
 import configureStore from './src/store/configureStore';
 
-const store = configureStore(() => { console.log('persisted'); });
+const store = configureStore(() => { console.log(store.getState()); });
 
 const Notes = () => (
   <Provider store={store}>

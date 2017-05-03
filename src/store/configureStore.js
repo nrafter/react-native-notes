@@ -1,9 +1,11 @@
-import { createStore, applyMiddleware,  } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { createLogger } from 'redux-logger';
 import { AsyncStorage } from 'react-native';
 
 import reducers from '../reducers';
+
+import storage from './storage';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
