@@ -10,9 +10,6 @@ import AllNotes from '../components/allNotes';
 import SingleNote from '../components/singleNote';
 
 export const AppNavigator = StackNavigator({
-  Login: { screen: LoginScreen },
-  Main: { screen: MainScreen },
-  Profile: { screen: ProfileScreen },
   NewNote: { screen: NewNote },
   AllNotes: { screen: AllNotes },
   SingleNote: { screen: SingleNote },

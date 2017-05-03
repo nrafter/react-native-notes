@@ -1,12 +1,12 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 
-import AppReducer from './src/reducers';
 import AppWithNavigationState from './src/navigators/AppNavigator';
 
-const store = createStore(AppReducer);
+import configureStore from './src/store/configureStore';
+
+const store = configureStore(() => { console.log('persisted'); });
 
 const Notes = () => (
   <Provider store={store}>
