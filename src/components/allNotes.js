@@ -11,7 +11,7 @@ import { NavigationActions } from 'react-navigation';
 
 import NewNote from './newNote';
 import SingleNote from './singleNote';
-import Toolbar from '../lib/Toolbar';
+import Toolbar, { TitleText } from '../lib/Toolbar';
 import NotesViewCard from '../lib/NotesViewCard';
 import AddNoteButton from '../lib/AddNoteButton';
 import { deleteNote } from '../actions';
@@ -87,7 +87,10 @@ const AllNotes = (props) => {
 };
 
 AllNotes.navigationOptions = {
-  header: <Toolbar title="Asprov Notes" color={getColor('paperBlue')} />,
+  headerTitle: <TitleText title="Asprov Notes" />,
+  headerStyle: {
+    backgroundColor: getColor('paperBlue'),
+  },
 };
 
 const mapStateToProps = state => ({

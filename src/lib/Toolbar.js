@@ -1,40 +1,52 @@
 //
 // Toolbar Component
 //
-import React, { Component } from 'react'
+import React from 'react';
 import {
   View,
   Text,
-  StyleSheet
-} from 'react-native'
+  StyleSheet,
+} from 'react-native';
 
-import { Typo } from './Typography'
-import { getColor } from './helpers'
+import { Typo } from './Typography';
+import { getColor } from './helpers';
 
-export default class Toolbar extends Component {
-  render() {
-    const {
-      color,
-      title
-    } = this.props
+const Toolbar = (props) => {
+  const {
+    color,
+    title,
+  } = props;
 
-    return (
-      <View style={[ styles.toolbar, { backgroundColor: getColor(color) } ]}>
-        <Text style={[ styles.title, Typo.toolbarTitle ]}>
-          {title.toUpperCase()}
-        </Text>
-      </View>
-    )
-  }
+  return (
+    <View style={[styles.toolbar, { backgroundColor: getColor(color) }]}>
+      <Text style={[styles.title, Typo.toolbarTitle]}>
+        {title.toUpperCase()}
+      </Text>
+    </View>
+  );
+};
+
+export const TitleText = (props) => {
+  const {
+    title,
+  } = props;
+
+  return (
+    <Text style={[styles.title, Typo.toolbarTitle]}>
+      {title.toUpperCase()}
+    </Text>
+  );
 }
 
 const styles = StyleSheet.create({
   toolbar: {
-    height: 56,
-    justifyContent: 'center'
+    height: 0,
+    justifyContent: 'center',
   },
   title: {
     marginLeft: 16,
-    color: 'white'
-  }
-})
+    color: 'white',
+  },
+});
+
+export default Toolbar;

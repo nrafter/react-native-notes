@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 
-import Toolbar from '../lib/Toolbar';
+import Toolbar, { TitleText } from '../lib/Toolbar';
 import TickBtn from '../lib/TickBtn';
 import BackBtn from '../lib/BackBtn';
 import { styles } from './styles';
@@ -76,7 +76,10 @@ const NewNote = (props) => {
 };
 
 NewNote.navigationOptions = {
-  header: <Toolbar title="Add New Note" color={getColor('paperTeal')}/>,
+  headerTitle: <TitleText title="Add New Note" />,
+  headerStyle: {
+    backgroundColor: getColor('paperTeal'),
+  },
 };
 
 const mapStateToProps = state => ({

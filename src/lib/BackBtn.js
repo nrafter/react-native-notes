@@ -1,34 +1,30 @@
 //
 // Add New Note Button
 //
-import React, { Component } from 'react'
+import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableOpacity
-} from 'react-native'
+  TouchableOpacity,
+} from 'react-native';
 
-import { Typo } from './Typography'
-import { getColor } from './helpers'
-import Icon from './Icon'
+import { Typo } from './Typography';
+import { getColor } from './helpers';
+import Icon from './Icon';
 
-export default class BackBtn extends Component {
-  render() {
-    return (
-
-        <View style={styles.container}>
-          <TouchableOpacity onPress={this.handlePress.bind(this)}>
-            <Icon name="close" size={36} color={getColor('#ffffff')} />
-          </TouchableOpacity>
-        </View>
-    )
+const BackBtn = (props) => {
+  function handlePress() {
+    props.onBtnPress();
   }
 
-  handlePress() {
-    this.props.onBtnPress()
-  }
-}
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={handlePress}>
+        <Icon name="close" size={36} color={getColor('#ffffff')} />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +33,8 @@ const styles = StyleSheet.create({
     bottom: 15,
     left: 15,
     backgroundColor: getColor('paperPink'),
-    borderRadius: 50
-  }
-})
+    borderRadius: 50,
+  },
+});
+
+export default BackBtn;
