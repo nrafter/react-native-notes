@@ -26,6 +26,20 @@ const AddNoteButton = (props) => {
   );
 };
 
+export const TestButton = (props) => {
+  function handlePress() {
+    props.onBtnPress();
+  }
+
+  return (
+    <View>
+      <TouchableOpacity onPress={handlePress}>
+        <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',

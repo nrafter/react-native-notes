@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 import notes from './notes';
 import currentNote from './current';
+import request from './request';
 
 import { AppNavigator } from '../navigators/AppNavigator';
 
@@ -43,6 +44,7 @@ const AppReducer = combineReducers({
   auth,
   notes,
   currentNote,
+  request,
 });
 
 export default AppReducer;

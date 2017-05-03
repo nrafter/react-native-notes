@@ -5,16 +5,20 @@ import {
   StatusBar,
   Alert,
   ListView,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import VectorIcon from 'react-native-vector-icons/MaterialIcons';
 
 import NewNote from './newNote';
 import SingleNote from './singleNote';
 import Toolbar, { TitleText } from '../lib/Toolbar';
 import NotesViewCard from '../lib/NotesViewCard';
-import AddNoteButton from '../lib/AddNoteButton';
-import { deleteNote } from '../actions';
+import DownloadNotesButton from '../lib/DownloadNotesButton';
+import AddNoteButton, { TestButton } from '../lib/AddNoteButton';
+import AuthButton from '../lib/AuthButton';
+import { deleteNote, downloadNotes } from '../actions';
 import { styles } from './styles';
 import { getColor } from '../lib/helpers';
 import { Typo } from '../lib/Typography';
@@ -44,6 +48,29 @@ const AllNotes = (props) => {
   }
 
   function renderList() {
+    if (props.request.isLoaded) {
+      let as = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+      let ataSource = as.cloneWithRows(props.request.data.children) || [];
+
+      return (
+        <ListView
+          dataSource={ataSource}
+          renderRow={(note, sectionID, rowID) => {
+            debugger;
+            return (
+              <NotesViewCard
+                title={note.title}
+                description={note.description}
+                id={note.id}
+                keys={rowID}
+                onPressBtn={goToNote}
+                onLongPressBtn={longPressNote}
+              />
+            )}
+          }
+        />
+      );
+    }
     // if (props.notes === undefined) return;
     if (props.notes.length <= 0) {
       return (
@@ -81,7 +108,8 @@ const AllNotes = (props) => {
       />
       { renderList() }
 
-      <AddNoteButton onBtnPress={addNewNote} />
+      <DownloadNotesButton onBtnPress={props.downloadNotes} />
+      <AddNoteButton onBtnPress={() => props.navigator.push('NewNote')} />
     </View>
   );
 };
@@ -91,10 +119,12 @@ AllNotes.navigationOptions = {
   headerStyle: {
     backgroundColor: getColor('paperBlue'),
   },
+  headerRight: <AuthButton />,
 };
 
 const mapStateToProps = state => ({
   notes: state.notes,
+  request: state.request,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -102,6 +132,7 @@ const mapDispatchToProps = dispatch => ({
     push: (routeName, params) => { dispatch(NavigationActions.navigate({ routeName, params })); },
   },
   deleteNote: note => dispatch(deleteNote(note)),
+  downloadNotes: () => dispatch(downloadNotes()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllNotes);
