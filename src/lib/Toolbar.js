@@ -1,7 +1,7 @@
 //
 // Toolbar Component
 //
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   View,
   Text,
@@ -10,33 +10,6 @@ import {
 
 import { Typo } from './Typography';
 import { getColor } from './helpers';
-
-const Toolbar = (props) => {
-  const {
-    color,
-    title,
-  } = props;
-
-  return (
-    <View style={[styles.toolbar, { backgroundColor: getColor(color) }]}>
-      <Text style={[styles.title, Typo.toolbarTitle]}>
-        {title.toUpperCase()}
-      </Text>
-    </View>
-  );
-};
-
-export const TitleText = (props) => {
-  const {
-    title,
-  } = props;
-
-  return (
-    <Text style={[styles.title, Typo.toolbarTitle]}>
-      {title.toUpperCase()}
-    </Text>
-  );
-}
 
 const styles = StyleSheet.create({
   toolbar: {
@@ -48,5 +21,18 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+const Toolbar = ({ color, title }) => (
+  <View style={[styles.toolbar, { backgroundColor: getColor(color) }]}>
+    <Text style={[styles.title, Typo.toolbarTitle]}>
+      {title.toUpperCase()}
+    </Text>
+  </View>
+);
+
+Toolbar.propTypes = {
+  color: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default Toolbar;

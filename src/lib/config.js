@@ -1,8 +1,8 @@
-import { typography, color } from './paper_styles'
+import { typography, color } from './paper_styles';
 
-export const COLOR = color
-export const TYPO = typography
-export const PRIMARY = 'paperBlue'
+export const COLOR = color;
+export const TYPO = typography;
+export const PRIMARY = 'paperBlue';
 export const COLOR_NAME = [
   'googleBlue',
   'googleGreen',
@@ -27,6 +27,6 @@ export const COLOR_NAME = [
   'paperPurple',
   'paperRed',
   'paperTeal',
-  'paperYellow'
-]
+  'paperYellow',
+];
 export const THEME_NAME = ['light', 'dark'];

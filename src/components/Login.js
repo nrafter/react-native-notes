@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { TitleText } from '../lib/Toolbar';
+import TitleText from '../lib/TitleText';
 
 import { getColor } from '../lib/helpers';
 

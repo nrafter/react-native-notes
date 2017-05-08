@@ -7,7 +7,8 @@ import {
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 
-import Toolbar, { TitleText } from '../lib/Toolbar';
+import Toolbar from '../lib/Toolbar';
+import TitleText from '../lib/TitleText';
 import TickBtn from '../lib/TickBtn';
 import BackBtn from '../lib/BackBtn';
 import { styles } from './styles';

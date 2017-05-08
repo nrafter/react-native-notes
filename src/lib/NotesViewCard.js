@@ -57,11 +57,11 @@ const NotesViewCard = ({ title, description, id, keys, onLongPressBtn, onPressBt
   </TouchableOpacity>
 );
 
-NotesViewCard.PropTypes = {
-  title: PropTypes.func.isRequired,
+NotesViewCard.propTypes = {
+  title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  keys: PropTypes.number.isRequired,
+  keys: PropTypes.string.isRequired,
   onLongPressBtn: PropTypes.func.isRequired,
   onPressBtn: PropTypes.func.isRequired,
 };

@@ -30,7 +30,7 @@ const AddNoteButton = ({ onBtnPress }) => (
   </View>
 );
 
-AddNoteButton.PropTypes = {
+AddNoteButton.propTypes = {
   onBtnPress: PropTypes.func.isRequired,
 };
 
