@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 
 import { Typo } from './Typography';
@@ -13,13 +14,19 @@ import { getColor } from './helpers';
 import Icon from './Icon';
 // import { downloadNotes } from '../actions';
 
-const DownloadNotesButton = ({ onBtnPress }) => (
-  <View style={styles.container}>
-    <TouchableOpacity onPress={onBtnPress}>
-      <Icon name="restore" size={56} color={getColor('paperGreen')} />
-    </TouchableOpacity>
-  </View>
-);
+const DownloadNotesButton = ({ onBtnPress, isLoggedIn }) => {
+  if (!isLoggedIn) {
+    return <Text />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onBtnPress}>
+        <Icon name="restore" size={56} color={getColor('paperGreen')} />
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

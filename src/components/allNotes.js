@@ -5,6 +5,7 @@ import {
   StatusBar,
   Alert,
   ListView,
+  Linking,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -55,13 +56,13 @@ const AllNotes = (props) => {
       return (
         <ListView
           dataSource={ataSource}
-          renderRow={(note, sectionID, rowID) => {
-            debugger;
+          pageSize={5}
+          renderRow={(request, sectionID, rowID) => {
             return (
               <NotesViewCard
-                title={note.title}
-                description={note.description}
-                id={note.id}
+                title={request.data.permalink}
+                description={request.data.title}
+                id={request.data.id}
                 keys={rowID}
                 onPressBtn={goToNote}
                 onLongPressBtn={longPressNote}
@@ -108,7 +109,7 @@ const AllNotes = (props) => {
       />
       { renderList() }
 
-      <DownloadNotesButton onBtnPress={props.downloadNotes} />
+      <DownloadNotesButton onBtnPress={props.downloadNotes} isLoggedIn={props.isLoggedIn} />
       <AddNoteButton onBtnPress={() => props.navigator.push('NewNote')} />
     </View>
   );
@@ -125,6 +126,7 @@ AllNotes.navigationOptions = {
 const mapStateToProps = state => ({
   notes: state.notes,
   request: state.request,
+  isLoggedIn: state.auth.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({

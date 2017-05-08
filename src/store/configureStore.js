@@ -19,7 +19,7 @@ const createNotesStore = applyMiddleware(logger, thunk)(createStore);
 function configureStore(onComplete) {
   // TODO(frantic): reconsider usage of redux-persist, maybe add cache breaker
   const store = autoRehydrate()(createNotesStore)(reducers);
-  persistStore(store, { storage: AsyncStorage }, onComplete);
+  // persistStore(store, { storage: AsyncStorage }, onComplete);
   if (isDebuggingInChrome) {
     window.store = store;
   }
