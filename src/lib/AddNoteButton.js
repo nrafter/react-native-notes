@@ -1,7 +1,7 @@
 //
 // Add New Note Button
 //
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,34 +12,6 @@ import { Typo } from './Typography';
 import { getColor } from './helpers';
 import Icon from './Icon';
 
-const AddNoteButton = (props) => {
-  function handlePress() {
-    props.onBtnPress();
-  }
-
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handlePress}>
-        <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-export const TestButton = (props) => {
-  function handlePress() {
-    props.onBtnPress();
-  }
-
-  return (
-    <View>
-      <TouchableOpacity onPress={handlePress}>
-        <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
-      </TouchableOpacity>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -49,5 +21,17 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+const AddNoteButton = ({ onBtnPress }) => (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={() => onBtnPress()}>
+      <Icon name="add-circle" size={56} color={getColor('paperBlue')} />
+    </TouchableOpacity>
+  </View>
+);
+
+AddNoteButton.PropTypes = {
+  onBtnPress: PropTypes.func.isRequired,
+};
 
 export default AddNoteButton;

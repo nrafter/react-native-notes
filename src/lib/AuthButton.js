@@ -27,10 +27,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  navigator: {
-    push: (routeName, params) => { dispatch(NavigationActions.navigate({ routeName, params })); },
-  },
-  onBtnPress: routeName => dispatch(NavigationActions.navigate({ routeName })),
   logout: () => dispatch({ type: 'Logout' }),
   login: () => dispatch(NavigationActions.navigate({ routeName: 'Login' })),
 });

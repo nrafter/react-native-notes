@@ -1,7 +1,7 @@
 //
 // Download Notes Button
 //
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,21 +12,6 @@ import {
 import { Typo } from './Typography';
 import { getColor } from './helpers';
 import Icon from './Icon';
-// import { downloadNotes } from '../actions';
-
-const DownloadNotesButton = ({ onBtnPress, isLoggedIn }) => {
-  if (!isLoggedIn) {
-    return <Text />;
-  }
-
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onBtnPress}>
-        <Icon name="restore" size={56} color={getColor('paperGreen')} />
-      </TouchableOpacity>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -37,5 +22,21 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+const DownloadNotesButton = ({ onBtnPress, isLoggedIn }) => ((isLoggedIn) ? (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={onBtnPress}>
+      <Icon name="restore" size={56} color={getColor('paperGreen')} />
+    </TouchableOpacity>
+  </View>
+  ) : (
+    <Text />
+  )
+);
+
+DownloadNotesButton.propTypes = {
+  onBtnPress: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+};
 
 export default DownloadNotesButton;

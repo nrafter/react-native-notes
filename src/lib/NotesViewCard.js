@@ -1,7 +1,8 @@
 //
 // Toolbar Component
 //
-import React from 'react';
+// import PropTypes from 'prop-types';
+import React, { PropTypes } from 'react';
 import {
   View,
   Text,
@@ -10,45 +11,6 @@ import {
 } from 'react-native';
 
 import { Typo } from './Typography';
-import { getColor } from './helpers';
-
-const NotesViewCard = (props) => {
-  const {
-    title,
-    description,
-    id,
-    keys,
-  } = props;
-
-  const background = (keys % 2 == 0) ? { backgroundColor: '#ffffff' } : { backgroundColor: '#f2f2f2' };
-
-  function handleLongPress() {
-    props.onLongPressBtn(props.id);
-  }
-
-  function handleGoto() {
-    props.onPressBtn(props.id, props.title, props.description);
-  }
-
-  return (
-    <TouchableOpacity onPress={handleGoto} onLongPress={handleLongPress}>
-      <View style={[styles.cardContainer, background]}>
-        <View style={styles.cardTitleContainer}>
-          <Text style={[styles.cardTitle, Typo.cardTitle]}>
-            {title.toUpperCase()}
-          </Text>
-        </View>
-        <View style={styles.cardDescriptionContainer}>
-          <Text style={[styles.cardDescription, Typo.cardDescription]}>
-            {(description.length > 150)
-              ? `${description.slice(0, 150)}...`
-              : description}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -70,5 +32,38 @@ const styles = StyleSheet.create({
 
   },
 });
+
+const NotesViewCard = ({ title, description, id, keys, onLongPressBtn, onPressBtn }) => (
+  <TouchableOpacity
+    onPress={() => onPressBtn(id, title, description)}
+    onLongPress={() => onLongPressBtn(id)}
+  >
+    <View
+      style={[styles.cardContainer, (keys % 2 === 0) ? { backgroundColor: '#ffffff' } : { backgroundColor: '#f2f2f2' }]}
+    >
+      <View style={styles.cardTitleContainer}>
+        <Text style={[styles.cardTitle, Typo.cardTitle]}>
+          {title.toUpperCase()}
+        </Text>
+      </View>
+      <View style={styles.cardDescriptionContainer}>
+        <Text style={[styles.cardDescription, Typo.cardDescription]}>
+          {(description.length > 150)
+            ? `${description.slice(0, 150)}...`
+            : description}
+        </Text>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+NotesViewCard.PropTypes = {
+  title: PropTypes.func.isRequired,
+  description: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  keys: PropTypes.number.isRequired,
+  onLongPressBtn: PropTypes.func.isRequired,
+  onPressBtn: PropTypes.func.isRequired,
+};
 
 export default NotesViewCard;

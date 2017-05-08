@@ -1,7 +1,7 @@
 //
 // Icon Component
 //
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { View } from 'react-native';
 import VectorIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -10,25 +10,15 @@ import { getColor } from './helpers';
 // example ->
 // <Icon name="google" size={24} color={COLOR[`${primary}500`].color} />
 
-const Icon = (props) => {
-  const {
-    name,
-    style,
-    size,
-    color,
-    allowFontScaling,
-  } = props;
-
-  return (
-    <VectorIcon
-      name={name}
-      size={size}
-      color={getColor(color)}
-      style={style}
-      allowFontScaling={allowFontScaling}
-    />
-  );
-};
+const Icon = ({ name, style, size, color, allowFontScaling }) => (
+  <VectorIcon
+    name={name}
+    size={size}
+    color={getColor(color)}
+    style={style}
+    allowFontScaling={allowFontScaling}
+  />
+);
 
 Icon.defaultProps = {
   size: 30,

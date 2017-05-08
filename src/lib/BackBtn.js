@@ -1,7 +1,7 @@
 //
 // Add New Note Button
 //
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,20 +11,6 @@ import {
 import { Typo } from './Typography';
 import { getColor } from './helpers';
 import Icon from './Icon';
-
-const BackBtn = (props) => {
-  function handlePress() {
-    props.onBtnPress();
-  }
-
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handlePress}>
-        <Icon name="close" size={36} color={getColor('#ffffff')} />
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -36,5 +22,17 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+const BackBtn = ({ onBtnPress }) => (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={() => onBtnPress()}>
+      <Icon name="close" size={36} color={getColor('#ffffff')} />
+    </TouchableOpacity>
+  </View>
+);
+
+BackBtn.propTypes = {
+  onBtnPress: PropTypes.func.isRequired,
+};
 
 export default BackBtn;
